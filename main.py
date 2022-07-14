@@ -17,9 +17,9 @@ from concurrent import futures
 from concurrent.futures import ThreadPoolExecutor, wait
 from operator import itemgetter
 from api.get_api_size import getAsin, getHTML, getInfos, getInfosThread, getPrice2, getSizes, loadImages, getlink
-from api.get_api_stype import getname, getPrice, getstype,  getdata
+from api.get_api_stype import getname, getPrice,   getdata
 from api.get_zip_code import zip_code
-from api.get_price_asin import getdata_codeasin, homnay
+from api.get_price_asin import getdata_codeasin, get, getdata_asin
 
 
 app = FlaskAPI(__name__)
@@ -76,8 +76,8 @@ def main():
         productDir = getAsin(link)
         codeHTML = CodeHTML(link)
         html = codeHTML.getPage()
-        stype = getstype(productDir)
-        if stype == "size":
+        stype = get(productDir)
+        if stype == "ok":
             sizes = getSizes(html)
             data["asinCode"] = productDir
             data["linkRoot"] = link
@@ -107,34 +107,22 @@ def main():
     @app.route("/get_price_codeasin", methods=['POST'])
     def get_price_codeasin():
         response = []
-        dem = 0
-        vit = ""
         url = request.data.get('data', '')
+        dem = 0
         for i in url:
             codeasin = i["codeasin"]
             price_old = i["price"]
-            vit = homnay(codeasin)
-            if vit == "ok":
-                data1 = getdata_codeasin(codeasin, price_old, dem)
-                response.append(data1)
-                return {"data": response}
-            else:
-                data1 = getdata_codeasin(codeasin, price_old, dem)
-                response.append(data1)
-            dem = dem + 1
-        return {"data": response}
+            sp = get(codeasin)
+            # if sp == "ok":
+            #     data1 = getdata_codeasin(codeasin, price_old, dem)
+            #     response.append(data1)
+            #     return {"data": response}
+            # else:
+            #     data1 = getdata_asin(codeasin, price_old, dem)
+            #     response.append(data1)
+            # dem = dem + 1
+        return {"data": sp}
 
-    @app.route("/stype", methods=['POST'])
-    def getstpe():
-        global data
-        data = {}
-        url = str(request.data.get('link_ref', ''))
-        # link = zip_code(url)
-        productDir = getAsin(url)
-        codeHTML = CodeHTML(url)
-        html = codeHTML.getPage()
-        stype = getstype(productDir)
-        return stype
     if __name__ == '__main__':
         app.run(debug=True, host="0.0.0.0", port="5000")
 

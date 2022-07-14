@@ -22,24 +22,6 @@ link = {}
 links = []
 
 
-def getstype(codeasin):
-    link = 'https://www.amazon.com/dp/{}?th=1&psc=1'.format(codeasin)
-    codeHTML = CodeHTML(link)
-    html = codeHTML.getPage()
-    htmlTest = codeHTML.beautifulSoup()
-    type = htmlTest.find('div', class_="a-row a-spacing-micro")
-    tt = ""
-    if (type):
-        st = type.text.strip()
-        if "Size:" in st:
-            tt = "size"
-            return tt
-        else:
-            tt = "stype"
-            return tt
-    return tt
-
-
 def getPrice(codeAsin):
     link = link = 'https://www.amazon.com/dp/{}?th=1&psc=1'.format(codeAsin)
     codeHTML = CodeHTML(link)
@@ -87,7 +69,7 @@ def getname(codeAsin):
     if(element):
         print(element.text.strip())
         return element.text.strip()
-    return None
+    return "thao"
 
 
 def getdata(codeAsin):
