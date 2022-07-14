@@ -113,15 +113,15 @@ def main():
             codeasin = i["codeasin"]
             price_old = i["price"]
             sp = get(codeasin)
-            # if sp == "ok":
-            #     data1 = getdata_codeasin(codeasin, price_old, dem)
-            #     response.append(data1)
-            #     return {"data": response}
-            # else:
-            #     data1 = getdata_asin(codeasin, price_old, dem)
-            #     response.append(data1)
-            # dem = dem + 1
-        return {"data": sp}
+            if sp == "ok":
+                data1 = getdata_codeasin(codeasin, price_old, dem)
+                response.append(data1)
+                return {"data": response}
+            else:
+                data1 = getdata_asin(codeasin, price_old, dem)
+                response.append(data1)
+            dem = dem + 1
+        return {"data": response}
 
     if __name__ == '__main__':
         app.run(debug=True, host="0.0.0.0", port="5000")
