@@ -1,0 +1,17 @@
+lxml
+beautifulSoup4
+flask_api
+xlsxwriter
+requests
+progressbar
+random_user_agent
+cssselect
+mongoengine
+pyreadline
+fake-useragent
+webdriver_manager
+selenium
+flask_mysqldb
+Werkzeug==0.11.15
+
+
